@@ -7,7 +7,8 @@
 
 int main()
 {
-	LX::Application app;
+	LX::Application& app = LX::Application::getInstance();
+	app.setFrameRateLimit(60);
 	if (!app.init()) {
 		return -1;
 	}

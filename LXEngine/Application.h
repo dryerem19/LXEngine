@@ -7,14 +7,21 @@ namespace LX
 	{
 	private:
 		GLFWwindow* _pWindow;
-		int _frameCount;
+		int _fps;
+		unsigned int _frameRateLimit;
 		std::chrono::time_point<std::chrono::high_resolution_clock> _lastTime;
 	public:
-		Application();
-		~Application();
+		static Application& getInstance();
 		bool init();
 		void run();
+		void setFrameRateLimit(unsigned int frameRateLimit);
+
 	private:
+		Application();
+		~Application();
+		Application(const Application&) = delete;
+		Application& operator=(const Application&) = delete;
+
 		void update(double deltaTime);
 	};
 }
