@@ -19,7 +19,8 @@ bld/
 [Oo]bj/
 [Ll]og/
 [Ll]ogs/
-out/
+[Bb]uild
+[Oo]ut
 
 # Prerequisites
 *.d

@@ -1,4 +1,4 @@
-﻿add_executable (LXEngine "LXEngine.cpp" "LXEngine.h" "log.h" "pch.h" "pch.cpp" "log.cpp" "Application.h" "Application.cpp")
+﻿add_executable (LXEngine "LXEngine.cpp" "LXEngine.h" "log.h" "pch.h" "pch.cpp" "log.cpp" "Application.h" "Application.cpp" "OS/Window.h" "OS/Window.cpp")
 target_precompile_headers(${PROJECT_NAME} PRIVATE "pch.h")
 
 if (CMAKE_VERSION VERSION_GREATER 3.12)

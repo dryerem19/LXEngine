@@ -2,13 +2,10 @@
 #include "Application.h"
 
 LX::Application::Application()
-	: _pWindow(nullptr), _lastTime(std::chrono::high_resolution_clock::now())
+	: _lastTime(std::chrono::high_resolution_clock::now())
 {
-}
-
-LX::Application::~Application()
-{
-	glfwTerminate();
+	_window.SetTitle("LXEngine");
+	_window.SetSize(800, 600);
 }
 
 LX::Application& LX::Application::getInstance()
@@ -19,21 +16,7 @@ LX::Application& LX::Application::getInstance()
 
 bool LX::Application::init()
 {
-	if (!glfwInit()) {
-		LOG_ERROR("Failed to initialize GLFW");
-		return false;
-	}
-
-	_pWindow = glfwCreateWindow(800, 600, "LX Game Engine", nullptr, nullptr);
-	if (!_pWindow) {
-		LOG_ERROR("Failed to create GLFW window");
-		return false;
-	}
-	glfwMakeContextCurrent(_pWindow);
-
-	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
-		LOG_ERROR("Failed to initialize GLAD");
-		glfwTerminate();
+	if (!_window.Initialize()) {
 		return false;
 	}
 
@@ -42,17 +25,12 @@ bool LX::Application::init()
 
 void LX::Application::run()
 {
-	if (!_pWindow) {
-		LOG_ERROR("The window has not been created, make sure that you have not forgotten to call init()");
-		return;
-	}
-
 	int frameCount = 0;
 	double timeStep = 1.0 / _frameRateLimit;
 	double accumulator = 0.0;
 	double fpsTimer = 0.0;
 
-	while (!glfwWindowShouldClose(_pWindow)) {
+	while (!_window.ShouldClose()) {
 		glClear(GL_COLOR_BUFFER_BIT);
 
 		auto currentTime = std::chrono::high_resolution_clock::now();
@@ -72,8 +50,7 @@ void LX::Application::run()
 			accumulator = 0.0;
 		}
 
-		glfwPollEvents();
-		glfwSwapBuffers(_pWindow);
+		_window.Update();
 
 		frameCount++;
 		if (fpsTimer >= 1.0) {
